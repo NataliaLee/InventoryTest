@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.InventoryLogic.Items
 {
-    public sealed class ContainerItem : Item, IContainer
+    public sealed class ContainerItem : Item
     {
         private readonly ContainerContent[] _contents;
         public IReadOnlyList<ContainerContent> Contents => _contents;

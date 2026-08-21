@@ -18,6 +18,7 @@ namespace Assets.Scripts.InventoryLogic.Inventory
 
         SwapIsNotAllowed,
 
-        ContainerExpected
+        ContainerExpected,
+        ContainerInsideContainer
     }
 }

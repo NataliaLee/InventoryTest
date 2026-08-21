@@ -8,26 +8,46 @@ namespace Assets.Scripts.InventoryLogic.Inventory
 {
     internal sealed class InventoryState
     {
+        private readonly InventoryEntry?[] _slots;
+        public int Capacity => _slots.Length;
+        public InventoryEntry? GetSlot(int index) => _slots[index];
+        public IEnumerable<InventoryEntry?> Slots => _slots;
+
         public InventoryState(int capacity)
         {
-            Slots = new InventoryEntry?[capacity];
+            _slots = new InventoryEntry?[capacity];
         }
 
         private InventoryState(InventoryEntry?[] slots)
         {
-            Slots = slots;
+            _slots = slots;
         }
 
-        public InventoryEntry?[] Slots { get; }
+        public void SetSlot(int index, InventoryEntry? entry)
+        {
+            _slots[index] = entry;
+        }
+
+
+        public int FindEmptySlot()
+        {
+            for (var i = 0; i < _slots.Length; i++)
+            {
+                if (_slots[i] == null)
+                    return i;
+            }
+
+            return -1;
+        }
 
         public InventoryState Clone()
         {
-            var slots = new InventoryEntry?[Slots.Length];
+            var copy = new InventoryEntry?[_slots.Length];
 
-            for (var i = 0; i < Slots.Length; i++)
-                slots[i] = Slots[i]?.Clone();
+            for (var i = 0; i < _slots.Length; i++)
+                copy[i] = _slots[i]?.Clone();
 
-            return new InventoryState(slots);
+            return new InventoryState(copy);
         }
     }
 }
