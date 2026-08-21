@@ -13,6 +13,10 @@ namespace Assets.Scripts.InventoryLogic.Inventory
         private InventoryState _state;
         public int Capacity => _state.Capacity;
 
+        public bool CanUndo => _history.CanUndo;
+        
+        public event Action StateChanged;
+
         public Inventory(int capacity, int historyCapacity = 10)
         {
             _state = new InventoryState(capacity);
@@ -77,7 +81,7 @@ namespace Assets.Scripts.InventoryLogic.Inventory
 
             _history.Push(_state);
             _state = workingState;
-
+            StateChanged?.Invoke();
             return result;
         }
     }

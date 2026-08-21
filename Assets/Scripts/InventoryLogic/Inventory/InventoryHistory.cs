@@ -10,6 +10,7 @@ namespace Assets.Scripts.InventoryLogic.Inventory
     {
         private readonly int _capacity;
         private readonly LinkedList<InventoryState> _states = new();
+        public bool CanUndo => _states.Count > 0;
 
         public InventoryHistory(int capacity)
         {
