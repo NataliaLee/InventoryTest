@@ -7,15 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Assets.Scripts.Game
 {
     public sealed class Bootstrap : MonoBehaviour
     {
-        [SerializeField] private int _inventoryCapacity;
         [SerializeField] private int _historyCapacity = 3;
         [SerializeField] private InventoryView _view;
         [SerializeField] private ControlPanelView _controlPanelView;
+        [SerializeField] private SetupPanelView _setupPanelView;
         [SerializeField] private ItemDatabase _database;
 
         [SerializeField] private ItemConfig[] _startingItems;
@@ -27,14 +28,19 @@ namespace Assets.Scripts.Game
         private void Awake()
         {
             _database.Initialize();
+            _setupPanelView.OnSetupClicked += Initialize;
+        }
 
-            _inventory = new Inventory(_inventoryCapacity, _historyCapacity);
+
+        private void Initialize(int capacity)
+        {
+            _setupPanelView.OnSetupClicked -= Initialize;
+            _inventory = new Inventory(capacity, _historyCapacity);
 
             foreach (var config in _startingItems)
             {
                 _inventory.Add(config.CreateItem());
             }
-
             _inventoryPresenter = new InventoryPresenter(
                 _inventory,
                 _view,
@@ -47,6 +53,7 @@ namespace Assets.Scripts.Game
                 _controlPanelView
                 );
             _controlPresenter.Initialize();
+            _setupPanelView.gameObject.SetActive(false);
         }
     }
 }
