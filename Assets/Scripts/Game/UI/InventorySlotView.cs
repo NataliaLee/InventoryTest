@@ -19,6 +19,9 @@ namespace Assets.Scripts.Game.UI
         public event Action Clicked;
         public event Action DoubleClicked;
 
+        private const float DoubleTapInterval = 0.3f;
+        private float _lastTapTime = float.NegativeInfinity;
+
         public void Show(Sprite icon, string amount)
         {
             _icon.enabled = true;
@@ -42,11 +45,17 @@ namespace Assets.Scripts.Game.UI
             if (eventData.button != PointerEventData.InputButton.Left)
                 return;
 
-            if (eventData.clickCount == 2)
+            var currentTime = Time.unscaledTime;
+
+            if (currentTime - _lastTapTime <= DoubleTapInterval)
             {
+                _lastTapTime = float.NegativeInfinity;
+
                 DoubleClicked?.Invoke();
                 return;
             }
+
+            _lastTapTime = currentTime;
 
             Clicked?.Invoke();
         }

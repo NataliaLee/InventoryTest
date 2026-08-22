@@ -44,6 +44,7 @@ namespace Assets.Scripts.Game.UI
                 items
                     .Select(x => x.DisplayName)
                     .ToList());
+            OnItemChose(0);
         }
 
         public void ShowResult(string message)

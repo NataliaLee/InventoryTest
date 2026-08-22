@@ -29,6 +29,7 @@ namespace Assets.Scripts.Game
         {
             _database.Initialize();
             _setupPanelView.OnSetupClicked += Initialize;
+            _setupPanelView.gameObject.SetActive(true);
         }
 
 
