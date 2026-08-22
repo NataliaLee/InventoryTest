@@ -1,0 +1,2 @@
+# Git LFS tracking file types
+*.apk filter=lfs diff=lfs merge=lfs -text
