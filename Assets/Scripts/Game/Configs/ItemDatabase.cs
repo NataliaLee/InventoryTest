@@ -15,6 +15,8 @@ namespace Assets.Scripts.Game.Configs
 
         private Dictionary<string, ItemConfig> _byId;
 
+        public IReadOnlyList<ItemConfig> Items => _items;
+
         public void Initialize()
         {
             _byId = _items.ToDictionary(x => x.Id);

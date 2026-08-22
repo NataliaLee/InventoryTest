@@ -19,5 +19,10 @@ namespace Assets.Scripts.Game.Configs
                 Id,
                 _maxStack);
         }
+
+        public override string GetDescription()
+        {
+            return $"{DisplayName} [{Id}] | Max stack: {_maxStack}";
+        }
     }
 }

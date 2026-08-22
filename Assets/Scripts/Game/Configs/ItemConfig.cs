@@ -14,5 +14,9 @@ namespace Assets.Scripts.Game.Configs
         public Sprite Icon => _icon;
 
         public abstract Item CreateItem();
+        public virtual string GetDescription()
+        {
+            return $"{DisplayName} [{Id}]";
+        }
     }
 }

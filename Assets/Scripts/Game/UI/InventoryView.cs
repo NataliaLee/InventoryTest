@@ -19,6 +19,8 @@ namespace Assets.Scripts.Game.UI
 
         [SerializeField]
         private Button _undoButton;
+        [SerializeField]
+        private Button _removeButton;
 
         [SerializeField]
         private TMP_Text _errorText;
@@ -28,6 +30,14 @@ namespace Assets.Scripts.Game.UI
         public event Action<int> SlotClicked;
         public event Action<int> SlotDoubleClicked;
         public event Action UndoClicked;
+        public event Action RemoveClicked;
+
+        private void Awake()
+        {
+            _undoButton.onClick.AddListener(() => UndoClicked?.Invoke());
+            _removeButton.onClick.AddListener(() => RemoveClicked?.Invoke());
+
+        }
 
         public void Initialize(int capacity)
         {
@@ -45,7 +55,6 @@ namespace Assets.Scripts.Game.UI
                 _slots.Add(slot);
             }
             ClearError();
-            _undoButton.onClick.AddListener(() => UndoClicked?.Invoke());
         }
 
         public void SetSlotSelected(int index, bool selected) 

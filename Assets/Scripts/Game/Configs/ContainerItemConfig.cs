@@ -1,9 +1,6 @@
 ﻿using Assets.Scripts.InventoryLogic.Items;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Configs
@@ -28,6 +25,32 @@ namespace Assets.Scripts.Game.Configs
             }
 
             return new ContainerItem(Id, contents);
+        }
+        public override string GetDescription()
+        {
+            var builder = new StringBuilder();
+
+            builder.Append(DisplayName)
+                .Append(" [")
+                .Append(Id)
+                .Append("] | Container");
+
+            if (_contents.Length == 0)
+                return builder.Append(": empty").ToString();
+
+            builder.Append(": ");
+
+            for (var i = 0; i < _contents.Length; i++)
+            {
+                if (i > 0)
+                    builder.Append(", ");
+
+                builder.Append(_contents[i].Item.DisplayName)
+                    .Append(" x")
+                    .Append(_contents[i].Amount);
+            }
+
+            return builder.ToString();
         }
     }
 

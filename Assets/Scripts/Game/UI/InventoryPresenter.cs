@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace Assets.Scripts.Game.UI
 {
@@ -35,8 +36,21 @@ namespace Assets.Scripts.Game.UI
             _view.SlotClicked += OnSlotClicked;
             _view.SlotDoubleClicked += TryOpenContainer;
             _view.UndoClicked += OnUndoClicked;
+            _view.RemoveClicked += OnRemoveClicked;
 
             Refresh();
+        }
+
+        private void OnRemoveClicked()
+        {
+            if (_selectedSlot == -1)
+            {
+                return;
+            }
+            var slot = _inventory.GetSlot(_selectedSlot);
+            var result = _inventory.Remove(slot.Item,slot.Amount);
+            ResetSelection();
+            HandleResult(result);
         }
 
         private void OnSlotClicked(int slotIndex)

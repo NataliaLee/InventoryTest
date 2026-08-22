@@ -13,31 +13,40 @@ namespace Assets.Scripts.Game
     public sealed class Bootstrap : MonoBehaviour
     {
         [SerializeField] private int _inventoryCapacity;
+        [SerializeField] private int _historyCapacity = 3;
         [SerializeField] private InventoryView _view;
+        [SerializeField] private ControlPanelView _controlPanelView;
         [SerializeField] private ItemDatabase _database;
 
         [SerializeField] private ItemConfig[] _startingItems;
 
         private Inventory _inventory;
-        private InventoryPresenter _presenter;
+        private InventoryPresenter _inventoryPresenter;
+        private ControlPanelPresenter _controlPresenter;
 
         private void Awake()
         {
             _database.Initialize();
 
-            _inventory = new Inventory(_inventoryCapacity);
+            _inventory = new Inventory(_inventoryCapacity, _historyCapacity);
 
             foreach (var config in _startingItems)
             {
                 _inventory.Add(config.CreateItem());
             }
 
-            _presenter = new InventoryPresenter(
+            _inventoryPresenter = new InventoryPresenter(
                 _inventory,
                 _view,
                 _database);
 
-            _presenter.Initialize();
+            _inventoryPresenter.Initialize();
+            _controlPresenter = new ControlPanelPresenter(
+                _inventory,
+                _database,
+                _controlPanelView
+                );
+            _controlPresenter.Initialize();
         }
     }
 }
