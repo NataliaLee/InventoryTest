@@ -55,8 +55,10 @@ namespace Assets.Scripts.Game.UI
 
         private void OnSlotClicked(int slotIndex)
         {
-            if (_selectedSlot == -1) 
-            { 
+            if (_selectedSlot == -1)
+            {
+                if (_inventory.GetSlot(slotIndex) == null)
+                    return;
                 _selectedSlot = slotIndex;
                 _view.SetSlotSelected(slotIndex,true);
                 return;
